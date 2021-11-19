@@ -10,10 +10,10 @@
     <aside>
         <ul>
             <li class="active">
-                <a href="">Categories</a>
+                <a href="categories.php">Categories</a>
             </li>
             <li>
-                <a href="">News</a>
+                <a href="news.php">News</a>
             </li>
         </ul>
     </aside>
