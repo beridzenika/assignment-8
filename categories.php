@@ -6,10 +6,9 @@
     $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     if(isset($_POST['action']) && $_POST['action'] == 'delete') {
-
         $id = $_POST['id'];
         
-        $delete_query = "DELETE FROM students WHERE id = " .$id;
+        $delete_query = "DELETE FROM categories WHERE id = " .$id;
 
             
 
@@ -38,7 +37,7 @@
     <main>
         <div class="container-header">
             <h2>კატეგორიები</h2>
-            <a href="form.php" class="btn">Add New</a>
+            <a href="categories_form.php" class="btn">Add New</a>
         </div>
         <div class="content">
             <table>
@@ -52,7 +51,7 @@
                     <td><?= $value['id'] ?></td>
                     <td><?= $value['title'] ?></td>
                     <td class="actions">
-                        <a class="edit" href="update.php?id=<?= $value['id'] ?>">Edit</a>
+                        <a class="edit" href="categories_update.php?id=<?= $value['id'] ?>">Edit</a>
                         <form action="" method="post">
                             <input type="hidden" name="action" value="delete">
                             <input type="hidden" name="id" value="<?= $value['id'] ?>">

@@ -63,6 +63,7 @@ if(isset($_POST['action']) && $_POST['action'] == 'insert') {
                     </select>
                 </div>
                 <div class="form-group">
+                    <input type="hidden" name="acton" value="insert">
                     <button class="btn submit">Add</button>
                 </div>
             </form>

@@ -5,19 +5,15 @@
     $id = isset($_GET['id']) && $_GET['id'] ? $_GET['id'] : null;
 
     if($id) {
-        $select_query = "SELECT * FROM news WHERE id = " .$id;
+        $select_query = "SELECT * FROM categories WHERE id = " .$id;
         $result = mysqli_query($connection, $select_query);
-        $news = mysqli_fetch_assoc($result);
-        if(!$news) {
-            die('news not found');
+        $categories = mysqli_fetch_assoc($result);
+        if(!$categories) {
+            die('categories not found');
         }
         } else {
             echo "invalid id";
         }
-
-    $select_categories = "SELECT * FROM categories";
-    $result = mysqli_query($connection, $select_categories);
-    $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
     if(isset($_POST['action']) && $_POST['action'] == 'update') {
         
@@ -26,7 +22,7 @@
         $categories_id = isset($_POST['categories_id']) ? $_POST['categories_id'] : '' ;
 
         if($title && $text && $categories_id) {
-            $update_query = "UPDATE news SET title = '$title', text = '$text', categories_id = '$categories_id' WHERE id = " . $id;
+            $update_query = "UPDATE categories SET title = '$title', text = '$text', categories_id = '$categories_id' WHERE id = " . $id;
 
             if(mysqli_query($connection, $update_query)) {
                 header('Location: index.php');
@@ -54,26 +50,14 @@
 
     <main>
         <div class="container-header">
-            <h2>News</h2>
-            <a href="news.php" class="btn">Update</a>
+            <h2>categories</h2>
+            <a href="categories.php" class="btn">Update</a>
         </div>
         <div class="content">
             <form action="" method="post">
                 <div class="form-group">
                     <label for="">title</label>
-                    <input type="text" name="title" value="<?= $news['title'] ?>">
-                </div>
-                <div class="form-group">
-                    <label for="">text</label>
-                    <textarea name="text" id="" cols="30" rows="10"  value="<?= $news['text'] ?>"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="">categories</label>
-                    <select name="categories_id" id="">
-                        <?php foreach($categories as $value) { ?>
-                        <option value="<?= $value['id'] ?>" <?= $value['id'] == $news['categories_id'] ? 'selected' : '' ?>><?= $value['title'] ?></option>
-                        <?php } ?>
-                    </select>
+                    <input type="text" name="title" value="<?= $categories['title'] ?>" >
                 </div> 
                 <div class="form-group">
                     <input type="hidden" name="acton" value="update">

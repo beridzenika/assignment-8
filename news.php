@@ -1,15 +1,13 @@
 <?php
     include('helper/DB_connection.php');
 
-    $select_query = "SELECT * FROM news";
+    $select_query = "SELECT news.id as news_id, news.title as news_title, news.text, news.categories_id, categories.id as cat_id, categories.title as categories_title
+                       FROM news
+                  LEFT JOIN categories ON news.categories_id = categories.id ";
     $result = mysqli_query($connection, $select_query);
     $news = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    $select_categories = "SELECT * FROM categories ";
-    $result_categories = mysqli_query($connection, $select_categories);
-    $categories = mysqli_fetch_all($result_categories, MYSQLI_ASSOC);
-
-    /*if(isset($_POST['action']) && $_POST['action'] == 'delete') {
+    if(isset($_POST['action']) && $_POST['action'] == 'delete') {
 
         $id = $_POST['id'];        
         $delete_query = "DELETE FROM news WHERE id = " .$id;
@@ -19,7 +17,7 @@
         } else {
             echo "Error";
         }
-    }*/
+    }
 
 ?>
 <html lang="en">
@@ -46,26 +44,19 @@
                 <tr>
                     <th>id</th>
                     <th>title</th>
-                    <th>text</th>
                     <th>categories</th>
                     <th>Actions</th>
                 </tr>
                 <?php foreach($news as $value) { ?>
                 <tr>
-                    <td><?= $value['id'] ?></td>
-                    <td><?= $value['title'] ?></td>
-                    <td><?= $value['text'] ?></td>
-                    <td><?php
-                        foreach($categories as $value){ 
-                        $value['categories_id']; 
-                        echo $value['title'];
-                        ?><?php } ?>
-                    </td>    
+                    <td><?= $value['news_id'] ?></td>
+                    <td><?= $value['news_title'] ?></td>
+                    <td><?= $value['categories_title'] ?></td>
                     <td class="actions">
-                        <a class="edit" href="update.php?id=<?= $value['id'] ?>">Edit</a>
+                        <a class="edit" href="update.php?id=<?= $value['news_id'] ?>">Edit</a>
                         <form action="" method="post">
                             <input type="hidden" name="action" value="delete">
-                            <input type="hidden" name="id" value="<?= $value['id'] ?>">
+                            <input type="hidden" name="id" value="<?= $value['news_id'] ?>">
                             <a class="delete" href="">Delete</a>
                         </form>
                     </td>
